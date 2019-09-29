@@ -201,3 +201,25 @@ class LineToCircle {
           this.curr.startUpdating(cb)
       }
 }
+
+class Renderer {
+
+    ltc : LineToCircle = new LineToCircle()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.ltc.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.ltc.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.ltc.update(() => {
+                    cb()
+                    this.animator.stop()
+                })
+            })
+        })
+    }
+}
