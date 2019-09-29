@@ -50,3 +50,42 @@ class ScaleUtil {
         return Math.min(1 / n, ScaleUtil.maxScale(scale, i, n)) * n
     }
 }
+
+class DrawingUtil {
+
+    static drawLine(context : CanvasRenderingContext2D, x1 : number, y1 : number, x2 : number, y2 : number) {
+        context.beginPath()
+        context.moveTo(x1, y1)
+        context.lineTo(x2, y2)
+        context.stroke()
+    }
+
+    static drawCircle(context : CanvasRenderingContext2D, r : number) {
+        context.beginPath()
+        context.arc(0, 0, r, 0, 2 * Math.PI)
+        context.fill()
+    }
+
+    static drawLineToCircle(context : CanvasRenderingContext2D, h : number, size : number, sc1 : number, sc2 : number) {
+        for (var i = 0; i < lines; i++) {
+            context.save()
+            context.scale(1, 1 - 2 * i)
+            DrawingUtil.drawLine(context, 0, -h / 2 + (h / 2) * sc2, 0, (h / 2) * sc1)
+            context.restore()
+        }
+        DrawingUtil.drawCircle(context, size * sc2)
+    }
+
+    static drawLTCNode(context : CanvasRenderingContext2D, i : number, scale : number) {
+        const gap : number = w / (nodes + 1)
+        const size : number = gap / sizeFactor
+        context.strokeStyle = foreColor
+        context.fillStyle = foreColor
+        context.lineCap = 'round'
+        context.lineWidth = Math.min(w, h) / strokeFactor
+        context.save()
+        context.translate(gap * (i + 1), h / 2)
+        DrawingUtil.drawLineToCircle(context, h, size, ScaleUtil.divideScale(scale, 0, 2), ScaleUtil.divideScale(scale, 1, 2))
+        context.restore()
+    }
+}
