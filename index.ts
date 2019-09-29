@@ -74,7 +74,7 @@ class DrawingUtil {
         for (var i = 0; i < lines; i++) {
             context.save()
             context.scale(1, 1 - 2 * i)
-            DrawingUtil.drawLine(context, 0, -h / 2 + (h / 2) * sc2, 0, (h / 2) * sc1)
+            DrawingUtil.drawLine(context, 0, -h / 2 + (h / 2) * sc2, 0,  -h / 2 + (h / 2) * sc1)
             context.restore()
         }
         DrawingUtil.drawCircle(context, size * sc2)
